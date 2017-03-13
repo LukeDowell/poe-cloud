@@ -13,10 +13,10 @@ fun main(args: Array<String>) {
         val injector = Guice.createInjector(ServiceModule())
         val stashService = injector.getInstance(StashService::class.java)
     
-        val stashes = stashService.getStashes().stashes
+        val stashRequest = stashService.getStashes()
+        
+        println(stashRequest.stashes.size)
     
-        println("Stash Size: ${stashes.size}")
-        stashes.forEach(::println)
     } catch(e: Exception) {
         e.printStackTrace()
     }
