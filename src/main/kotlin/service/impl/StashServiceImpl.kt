@@ -11,20 +11,18 @@ class StashServiceImpl: StashService {
     }
     
     override fun getStashes(): StashRequest {
-        "/public-stash-tabs".httpGet().responseObject(StashRequest.Deserializer()) { request, response, result ->
-            
-            println("starting")
-            
+        "/public-stash-tabs".httpGet().responseObject(StashRequest.Deserializer()) { req, res, result ->
             result.fold(
-                { success ->
-                    println(success)
+                success = {
+                    val stashes = it.stashes
+    
+                    println("Stash Size: ${stashes.size}")
+                    stashes.forEach(::println)
                 },
-                { error ->
-                    println(error)
-                }
+                    
+                failure = ::println
             )
         }
-    
         return StashRequest("", listOf())
     }
     

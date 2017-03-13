@@ -5,12 +5,19 @@ import service.StashService
 
 fun main(args: Array<String>) {
     
-    // Fuel config
-    FuelManager.instance.basePath = "http://api.pathofexile.com"
+    try {
+        // Fuel config
+        FuelManager.instance.basePath = "http://api.pathofexile.com"
     
-    // GOooo
-    val injector = Guice.createInjector(ServiceModule())
-    val stashService = injector.getInstance(StashService::class.java)
+        // GOooo
+        val injector = Guice.createInjector(ServiceModule())
+        val stashService = injector.getInstance(StashService::class.java)
     
-    stashService.getStashes()
+        val stashes = stashService.getStashes().stashes
+    
+        println("Stash Size: ${stashes.size}")
+        stashes.forEach(::println)
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
 }
